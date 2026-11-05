@@ -1,0 +1,413 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="stylesheet" href="/nav.css">
+<nav class="ho-nav"><a href="/log.html">Daily log</a><a href="/todo.html">Todo</a><a href="/plan.html" aria-current="page">Strength plan</a><a href="/focus.html">Focus plan</a></nav>
+<title>Rotation Strength Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: single reading column like a coach's program sheet; day-type colors (free = iron green, kids = amber) carry through every section */
+:root{
+  --bg:#F3F5F2; --surface:#FFFFFF; --ink:#18211D; --muted:#5B6862; --line:#D6DDD8;
+  --free:#2F6B4F; --free-soft:#E1EEE6; --kids:#B7701A; --kids-soft:#F7EBD9;
+  --good:#2F7D4A; --warn:#B7861A; --bad:#B23A2E;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121815; --surface:#1A221E; --ink:#E6ECE8; --muted:#9AA8A1; --line:#2E3934;
+  --free:#6FC096; --free-soft:#1F3329; --kids:#E3A452; --kids-soft:#3A2C18;
+  --good:#6FC096; --warn:#E3B452; --bad:#E57A6E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121815; --surface:#1A221E; --ink:#E6ECE8; --muted:#9AA8A1; --line:#2E3934;
+  --free:#6FC096; --free-soft:#1F3329; --kids:#E3A452; --kids-soft:#3A2C18;
+  --good:#6FC096; --warn:#E3B452; --bad:#E57A6E; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:2.6rem;text-transform:uppercase}
+h2{font-size:1.75rem;text-transform:uppercase;margin-bottom:12px}
+h3{font-size:1.2rem;font-weight:600;margin:18px 0 6px}
+p{margin:0 0 10px;max-width:65ch}
+ul{margin:0 0 10px;padding-left:1.2em}
+li{margin-bottom:4px;max-width:65ch}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.08rem;color:var(--muted)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px;font-weight:600}
+.tag.free{background:var(--free-soft);color:var(--free)}
+.tag.kids{background:var(--kids-soft);color:var(--kids)}
+.ev{font-family:var(--mono);font-size:.7rem;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:0 5px;white-space:nowrap}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cols>div{min-width:0;padding:16px 18px;border-radius:6px}
+.cols .f{background:var(--free-soft)} .cols .k{background:var(--kids-soft)}
+.cols h3{margin-top:0}
+@media (max-width:620px){.cols{grid-template-columns:1fr}}
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:end}
+label{font-size:.82rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+input,select{font:inherit;font-size:.95rem;padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+input:focus-visible,select:focus-visible{outline:2px solid var(--free);outline-offset:1px}
+.strip{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px}
+.day{border-radius:4px;padding:6px 4px;text-align:center;min-width:0;font-size:.7rem;line-height:1.25}
+.day b{display:block;font-family:var(--mono);font-size:.78rem}
+.day span{display:block;font-family:var(--mono);font-size:.68rem;margin-top:3px;font-weight:600}
+.day.free{background:var(--free-soft);color:var(--free)}
+.day.kids{background:var(--kids-soft);color:var(--kids)}
+@media (max-width:520px){.strip{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.mono{white-space:nowrap}
+.verdict{padding:12px 14px;border-radius:4px;border-left:4px solid var(--muted);background:var(--bg)}
+.verdict.g{border-color:var(--good)} .verdict.w{border-color:var(--warn)} .verdict.b{border-color:var(--bad)}
+.verdict strong{display:block;font-family:var(--display);font-size:1.15rem;text-transform:uppercase;letter-spacing:.02em}
+.flag{border:1px solid var(--bad);border-radius:6px;padding:16px 18px}
+.flag h2{color:var(--bad)}
+.note{font-size:.85rem;color:var(--muted)}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.opts>div{min-width:0;border:1px solid var(--line);border-radius:6px;padding:14px;background:var(--surface)}
+.opts>div.rec{border-color:var(--free);border-width:2px}
+.opts h3{margin-top:0}
+@media (max-width:620px){.opts{grid-template-columns:1fr}}
+footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Draft v2.5 · 22 Oct 2026 · <a href="/log.html" style="color:var(--free)">Daily log</a> · for rama</div>
+  <h1>Rotation Strength Plan</h1>
+  <p class="lede">Muscle, focus and mood, built around a 3‑2‑2‑3 custody rotation. Kid‑free days carry the real training. Kid days keep a short version so the habit never breaks. Oura and Garmin tell you when to push and when to back off.</p>
+  <p class="note">Built for: 143 lb, 5′6″, newer to lifting, training at home with adjustable dumbbells (15 lb max each), a bike trainer and a yoga mat, no conditions or diet limits, daily finasteride, oral minoxidil and a hair supplement chew. The rotation is a 10‑day loop (3 with kids, 2 free, 2 with kids, 3 free). Evidence tags: <span class="ev">strong</span> = consistent trials or meta‑analyses, <span class="ev">moderate</span> = good but mixed, <span class="ev">practical</span> = coaching convention.</p>
+</header>
+
+<section>
+  <h2>The core idea</h2>
+  <p>Fixed weekday programs break on a rotation. This plan runs a <strong>session queue</strong> instead. On a free day you do the next full session in the list, whatever day it is. On a kid day you do a 20‑minute micro session or a walk. Missed days don't need making up, because the queue simply waits.</p>
+  <div class="cols">
+    <div class="f">
+      <h3><span class="tag free">Free day</span></h3>
+      <ul>
+        <li>Next full session from the queue, 45 to 60 min at home</li>
+        <li>One 90‑minute deep‑work block</li>
+        <li>Batch‑cook protein for the next kid block</li>
+        <li>One social plan per free block</li>
+      </ul>
+    </div>
+    <div class="k">
+      <h3><span class="tag kids">Kid day</span></h3>
+      <ul>
+        <li>20‑min micro session, or a 30‑min walk with the kids</li>
+        <li>Protein anchors already prepped, no cooking decisions</li>
+        <li>One 30 to 45‑min focus block, if any</li>
+        <li>Same wake time as free days</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Timeline</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Phase</th><th>Dates</th><th>What changes</th></tr></thead>
+    <tbody>
+      <tr><td>Labs</td><td class="mono">Before Nov 1</td><td>Book a morning, fasting blood draw using the list below. Repeat the key markers in early March to compare.</td></tr>
+      <tr><td>Baseline</td><td class="mono">Nov 1 – Dec 31</td><td>Training, protein, creatine and sleep habits start Nov 1 and then stay steady. You track everything daily. No new supplements. Expect the holidays to add noise, so note travel, late nights and alcohol in your check‑in.</td></tr>
+      <tr><td>Change 1</td><td class="mono">Jan 1 – Feb 28</td><td>Add bacopa and nothing else. Compare your brain‑fog score against December. It's an 8‑week window, the short end of bacopa's timeline, so extend it to mid‑March if the trend is still moving.</td></tr>
+      <tr><td>Change 2</td><td class="mono">Mar 1 onward</td><td>Optional: add CDP‑choline, or whatever the January–February data points to.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Any clinical evaluations between phases: bring the November–December log, since daily mood, focus and sleep data is useful to a clinician. If a new prescription starts, it becomes its own phase. Don't start it in the same weeks as a supplement, and tell the prescriber about everything you take.</p>
+</section>
+
+<section>
+  <h2>Baseline first, then track</h2>
+  <p>November and December are for measuring. Training and protein start on Nov 1, but hold off judging anything until the baseline exists. Each pillar gets one baseline and a few daily ticks that take under a minute.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Pillar</th><th>Baseline (Nov–Dec)</th><th>Track daily</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Focus</strong></td><td>Brain fog rated 1 to 5 each afternoon, plus minutes of deep work actually completed. Note sleep hours and caffeine timing next to it so we can see what drives the fog.</td><td>Fog score, deep‑work minutes</td></tr>
+      <tr><td><strong>Muscle</strong></td><td>Testosterone is a lab test ordered by your doctor. Ask for total and free testosterone, drawn between 7 and 10 am, ideally on two separate mornings since levels swing day to day. Also record starting bodyweight, waist, and top sets from your first two sessions of each lift.</td><td>Meds taken (yes/no), workout logged in Garmin</td></tr>
+      <tr><td><strong>Mood</strong></td><td>Stress rated 1 to 5 each evening, alongside Oura's daytime stress and HRV trend.</td><td>Stress score, journal (yes/no), reading minutes, meditation minutes</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><strong>Journaling:</strong> 5 minutes, three lines is enough. Expressive writing has a small but real effect on stress. <span class="ev">moderate</span></li>
+    <li><strong>Meditation:</strong> 10 minutes daily, logged in Oura's sessions so it lines up with HRV. Mindfulness practice reliably lowers perceived stress. <span class="ev">moderate</span></li>
+    <li><strong>Reading:</strong> 20 minutes, ideally on paper before bed as part of winding down. <span class="ev">practical</span></li>
+  </ul>
+  <p class="note">On kid days, the daily ticks still apply but the minimums shrink: 3 minutes of meditation, one journal line, and reading after bedtime.</p>
+</section>
+
+<section>
+  <h2>Your hair meds and this plan</h2>
+  <p>None of them get in the way of building muscle. A few things to know:</p>
+  <ul>
+    <li><strong>Testosterone test:</strong> tell the doctor you take finasteride. It blocks the conversion of testosterone to DHT, so testosterone often reads a little higher than it otherwise would. <span class="ev">strong</span></li>
+    <li><strong>Supplement chew:</strong> check the label for biotin. Biotin can throw off many lab tests, including testosterone and thyroid tests. Skip the chew for 3 days before any blood draw. <span class="ev">strong</span></li>
+    <li><strong>Finasteride and mood:</strong> the FDA label lists depression and, rarely, suicidal thoughts as possible side effects. Your daily mood and stress ratings will catch this early. If mood drops and stays down, tell your prescriber before blaming the training. <span class="ev">strong</span></li>
+    <li><strong>Finasteride and muscle:</strong> no good evidence that it slows muscle gain. Muscle growth runs mainly on testosterone, not DHT. <span class="ev">moderate</span></li>
+    <li><strong>Minoxidil:</strong> topical (foam or liquid) barely reaches the rest of the body. Oral minoxidil is a blood pressure drug. It can raise resting heart rate, which Oura will show, cause lightheadedness when standing up fast, and add water weight, which can blur your weekly weight trend. Since you take it by mouth, get up slowly between floor exercises and tell your doctor about any swelling. You're already on it, so your Nov–Dec baseline includes its effect on resting heart rate. Oura stays comparable as long as the dose doesn't change. Log any dose change in your daily check‑in. <span class="ev">strong</span></li>
+    <li><strong>Creatine and hair:</strong> a single small 2009 study found creatine raised DHT. Later studies haven't repeated that finding, and finasteride blocks that pathway anyway. Most people on finasteride can take it, but ask your prescriber if you want to be sure. <span class="ev">moderate</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Labs to ask your doctor for</h2>
+  <p>A standard physical usually covers the tests marked <span class="tag free">standard</span>. Ask for the others by name, and check what your insurance covers, since some of these may not be included.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Test</th><th>Why</th><th>Pillar</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>Total + free testosterone, SHBG</td><td>Your hormone baseline. Free testosterone and SHBG show how much is actually usable. Tell the doctor you take finasteride.</td><td>Muscle</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>Estradiol (sensitive assay), LH, FSH</td><td>Shows why testosterone is low, if it is. Ask if it's worth adding.</td><td>Muscle</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>Fasting insulin + fasting glucose</td><td>Together they give HOMA‑IR, an early measure of insulin resistance that often shows up years before A1c rises.</td><td>Muscle, focus</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>HbA1c</td><td>Your blood sugar average over about 3 months.</td><td>Muscle, focus</td><td><span class="tag free">standard</span></td></tr>
+      <tr><td>Cystatin C</td><td>A kidney marker that creatine doesn't skew. Creatine raises creatinine on the standard panel even when your kidneys are fine.</td><td>Muscle</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>Lipid panel + ApoB</td><td>ApoB counts the particles that actually drive heart risk, and it's more precise than LDL alone.</td><td>Body</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>Lp(a)</td><td>Inherited heart risk factor. It only needs testing once in your life.</td><td>Body</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>hs‑CRP</td><td>A general marker of inflammation, which tends to run alongside low mood and poor recovery.</td><td>Mood, muscle</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>TSH + free T4</td><td>An underactive thyroid causes fog, fatigue and low mood. It's also a baseline before bacopa.</td><td>Focus, mood</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>Ferritin + iron panel</td><td>Low ferritin causes fatigue and fog even when the blood count looks normal.</td><td>Focus, mood</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>Vitamin B12 + folate</td><td>Low levels cause fog and low mood. If B12 is borderline, add methylmalonic acid (MMA).</td><td>Focus, mood</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>Vitamin D (25‑OH)</td><td>Commonly low in winter, and low levels are linked to low mood.</td><td>Mood</td><td><span class="tag kids">ask</span></td></tr>
+      <tr><td>CBC + CMP</td><td>Blood counts, electrolytes, liver and kidney function. Useful on oral minoxidil.</td><td>All</td><td><span class="tag free">standard</span></td></tr>
+      <tr><td>Blood pressure + resting heart rate</td><td>A baseline for oral minoxidil, and needed before any ADHD medication is considered.</td><td>All</td><td><span class="tag free">standard</span></td></tr>
+    </tbody>
+  </table></div>
+  <h3>Prep for the draw</h3>
+  <ul>
+    <li>Fast 8 to 12 hours, water only. Get drawn between 7 and 10 am.</li>
+    <li>Skip the hair supplement chew for 3 days, because biotin skews testosterone and thyroid results.</li>
+    <li>No hard workout for 48 hours before, since heavy training temporarily raises liver and muscle enzymes.</li>
+    <li>No alcohol the day before. Sleep normally.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Your next 20 days</h2>
+  <div class="tool">
+    <div class="row">
+      <label for="startDate">Next kid block starts
+        <input type="date" id="startDate">
+      </label>
+      <label for="phase">That day begins
+        <select id="phase">
+          <option value="0">the 3‑day kid block</option>
+          <option value="5">the 2‑day kid block</option>
+        </select>
+      </label>
+    </div>
+    <div class="strip" id="strip" aria-live="polite"></div>
+    <p class="note" id="stripNote">Each 10‑day loop gives 5 free days: 4 full sessions plus 1 rest day, and 2 to 3 micro sessions on kid days.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Training</h2>
+  <p>As a newer lifter you'll grow fastest on two full‑body sessions that alternate. Per 10 days that's 4 full sessions plus 2 to 3 micro sessions, so every muscle gets trained about three times a week. For someone early in training, that frequency and volume is plenty. <span class="ev">strong</span></p>
+
+  <h3>Full sessions (free days, in order)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Queue</th><th>Session</th><th>Main lifts</th><th>Sets × reps</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">A</td><td>Full body A</td><td>Bulgarian split squat holding both DBs, push‑up (raise your feet as it gets easy), one‑arm DB row (3‑sec lower, 1‑sec pause at the top), single‑leg DB Romanian deadlift, plank</td><td class="mono">3 × 10–20</td></tr>
+      <tr><td class="mono">B</td><td>Full body B</td><td>Goblet squat (3‑sec lower, 1½ reps), pull‑up or inverted row under a sturdy table, seated DB overhead press, single‑leg hip thrust with a DB, curl + overhead triceps extension</td><td class="mono">3 × 10–20</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>Take most sets to within 0 to 2 reps of failure. Dumbbells cap the weight, so effort and reps do the work. Sets of 8 to 20 build muscle as well as heavy sets when taken that close to failure. <span class="ev">strong</span></li>
+    <li>Progress by adding a rep, then weight once you hit the top of the range on every set. Garmin's strength activity logs sets and reps; note top‑set weight in the activity title.</li>
+    <li><strong>Working around 15 lb:</strong> that's light for legs and back, so the sessions use one‑leg moves, slow lowering, pauses and 1½ reps to make it harder. Once you hit 20 clean reps on a move, make the next version harder rather than adding weight. A doorway pull‑up bar is now the most useful thing to buy. Expect legs to outgrow the dumbbells within 2 to 3 months. At that point, the next upgrade is an adjustable set that goes to 50 lb.</li>
+    <li>On the third day of a 3‑day free block, rest or ride the bike trainer for 30 to 40 easy minutes (zone 2, logged by Garmin). Cardio at that dose doesn't block muscle gain. <span class="ev">moderate</span></li>
+  </ul>
+
+  <h3>Micro session (kid days, 20 min, home)</h3>
+  <p>Three rounds: goblet squat ×12, push‑up ×max−2, one‑arm DB row ×12/side, reverse lunge ×10/side, dead bug ×10. A walk or bike ride with the kids counts just as well. The goal is keeping the habit alive, not adding load.</p>
+
+  <h3>Pick a starting dose</h3>
+  <div class="opts">
+    <div>
+      <div class="eyebrow">Low risk</div>
+      <h3>Minimum</h3>
+      <p class="note">3 full sessions per 10 days (A, B, then alternate). Pick this if you're returning from a layoff or sleep is poor. Slower gains, almost no chance of burnout.</p>
+    </div>
+    <div class="rec">
+      <div class="eyebrow">Recommended</div>
+      <h3>Standard</h3>
+      <p class="note">4 full sessions plus micro sessions, as above. Best ratio of results to schedule strain for a parent on a rotation.</p>
+    </div>
+    <div>
+      <div class="eyebrow">Higher reward</div>
+      <h3>Push</h3>
+      <p class="note">Train all 5 free days and do micro sessions on every kid day. Only if readiness stays above 75 for two weeks straight. Recovery debt shows up first in HRV.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Readiness rules</h2>
+  <p>Check Oura in the morning before deciding the day. Use the readiness score as a gate, and use the trends (HRV, resting heart rate, temperature) to confirm it. A single low score matters less than two in a row.</p>
+  <div class="tool">
+    <div class="row">
+      <label for="ready">Today's Oura readiness
+        <input type="number" id="ready" min="0" max="100" value="78" inputmode="numeric">
+      </label>
+      <label for="dayType">Day type
+        <select id="dayType">
+          <option value="free">Free day</option>
+          <option value="kids">Kid day</option>
+        </select>
+      </label>
+      <label for="lowStreak">Low days in a row (under 70)
+        <input type="number" id="lowStreak" min="0" max="30" value="0" inputmode="numeric">
+      </label>
+    </div>
+    <div class="verdict" id="verdict"></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Readiness</th><th>Free day</th><th>Kid day</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">85+</td><td>Queue session as written. Push the top set if it moves well.</td><td>Micro session</td></tr>
+      <tr><td class="mono">70–84</td><td>Queue session as written. No extra sets.</td><td>Micro session or walk</td></tr>
+      <tr><td class="mono">60–69</td><td>Drop one set per exercise and cap effort at 3 reps short of failure, or swap to a micro session</td><td>Walk only</td></tr>
+      <tr><td class="mono">&lt;60</td><td>Rest, walk, sleep early. The queue waits.</td><td>Rest</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Oura's score is a proprietary composite, so these cutoffs are a starting point <span class="ev">practical</span>. After two loops we'll tune them against how your sessions actually felt.</p>
+</section>
+
+<section>
+  <h2>Nutrition for muscle</h2>
+  <ul>
+    <li><strong>Protein:</strong> about 105 to 130 g a day, which is 1.6 to 2 g per kg at 143 lb. Benefits level off around 1.6 to 2.2 g/kg, so going higher mostly costs money. <span class="ev">strong</span></li>
+    <li><strong>Spread it:</strong> 3 to 4 meals of about 30 to 40 g each. <span class="ev">moderate</span></li>
+    <li><strong>Calories:</strong> since you're fine adding some fat, eat about 400 to 500 kcal over maintenance and aim for a gain of 0.5 to 0.75 lb a week on the 7‑day average. Newer lifters build muscle fastest, and this pace takes advantage of that. If the average climbs faster than 1 lb a week, cut back on carbs and fats, never protein. If it stalls for two weeks, add about 200 kcal a day, such as a glass of whole milk and a banana. <span class="ev">moderate</span></li>
+    <li><strong>Creatine monohydrate:</strong> 3 to 5 g daily, any time, no loading. It's the best‑supported supplement for strength and lean mass. <span class="ev">strong</span> Check with a doctor first if you have kidney issues.</li>
+    <li><strong>Kid‑day anchors:</strong> Greek yogurt, eggs, rotisserie chicken, tuna or salmon pouches, cottage cheese, a protein shake. Stock them during the free block so kid days need zero planning.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Focus</h2>
+  <ul>
+    <li><strong>Sleep comes first.</strong> Aim for 7 to 9 hours and keep the same wake time on kid and free days. Irregular sleep schedules hurt attention and mood independently of total hours. <span class="ev">strong</span></li>
+    <li><strong>Morning light:</strong> 10 minutes outside within an hour of waking anchors your body clock. <span class="ev">moderate</span></li>
+    <li><strong>Deep‑work block:</strong> 90 minutes on free days, 30 to 45 on kid days, with the phone in another room. Schedule it, don't wait for the mood. <span class="ev">practical</span></li>
+    <li><strong>Caffeine:</strong> none after about 1 pm. Late caffeine shortens deep sleep, and Oura will show it. <span class="ev">strong</span></li>
+    <li><strong>Training helps directly.</strong> A session or brisk walk sharpens attention for a few hours afterward, so put training before your hardest work when you can. <span class="ev">moderate</span></li>
+    <li><strong>Bacopa (Jan 1 – Feb 28):</strong> 300 mg a day of an extract standardized to about 50% bacosides, taken with food. Trials show modest gains in memory recall after 8 to 12 weeks, with little effect before then. Common side effects are an upset stomach and drowsiness, so take it with dinner if it makes you sleepy. Buy a third‑party‑tested brand, because some products have tested high for heavy metals. <span class="ev">moderate</span></li>
+    <li><strong>CDP‑choline (citicoline), optional, March or later:</strong> 250 to 500 mg in the morning. Evidence in healthy adults under 50 is thin, coming from a few small trials on attention. Eggs already supply choline. Add it only after the bacopa trial so you can tell which one is doing what. <span class="ev">limited</span></li>
+    <li><strong>One change at a time:</strong> training, creatine and sleep fixes all start in November. If you start the supplements at the same time, you won't know what moved your brain‑fog score.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Emotional wellbeing</h2>
+  <ul>
+    <li><strong>Exercise counts as treatment.</strong> Strength training and walking both reduce depressive symptoms in large meta‑analyses, with effects comparable to standard therapies. This plan already covers it. <span class="ev">strong</span></li>
+    <li><strong>Handoff ritual:</strong> handoff days can bring a dip, especially the first evening of an empty house. Put a planned anchor there, such as a training session, a call with a friend, or a meal out. <span class="ev">practical</span></li>
+    <li><strong>One social touch per free block,</strong> in person when possible. Loneliness predicts low mood more strongly than most lifestyle factors. <span class="ev">strong</span></li>
+    <li><strong>Daily 30‑second check‑in:</strong> rate mood 1 to 5 in Oura's tags or a notes app. It gives us a trend to read alongside sleep and training.</li>
+    <li><strong>Kid days:</strong> outdoor time with the kids counts as recovery, movement and connection at once.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Weekly review</h2>
+  <p>Ten minutes on the first evening of a free block. These numbers, nothing else.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Metric</th><th>Source</th><th>Target</th><th>If off</th></tr></thead>
+    <tbody>
+      <tr><td>Bodyweight, 7‑day average</td><td>Scale (morning)</td><td class="mono">+0.5–0.75 lb/wk</td><td>Adjust calories by 150–200</td></tr>
+      <tr><td>Sessions done</td><td>Garmin</td><td class="mono">≥ 4 full / 10 d</td><td>Find the blocker and simplify</td></tr>
+      <tr><td>Top‑set progress</td><td>Garmin notes</td><td class="mono">↑ over 2 loops</td><td>Check sleep and protein first</td></tr>
+      <tr><td>Sleep, 7‑day average</td><td>Oura</td><td class="mono">≥ 7 h</td><td>Fix bedtime before anything else</td></tr>
+      <tr><td>Mood, 7‑day average</td><td>Daily check‑in</td><td class="mono">≥ 3.5 / 5</td><td>Add a social anchor; see flags below</td></tr>
+      <tr><td>Brain fog, 7‑day average</td><td>Daily check‑in</td><td class="mono">↓ vs baseline</td><td>Compare against sleep and caffeine first</td></tr>
+      <tr><td>Stress, 7‑day average</td><td>Daily check‑in + Oura</td><td class="mono">↓ vs baseline</td><td>Protect meditation and the handoff ritual</td></tr>
+      <tr><td>Habit ticks</td><td>Meds, journal, reading, meditation</td><td class="mono">≥ 5 / 7 each</td><td>Shrink the habit, don't drop it</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Prediction to log now</h3>
+  <p>Before you start, write down what you expect after 12 weeks (pounds gained, top‑set increase on squat and bench) and how confident you are, as a percentage. We'll check it at week 12 so you can see how well your own forecasts hold up.</p>
+  <p class="note">For reference, the target pace works out to about 6 to 9 lb on the scale over 12 weeks, part muscle and part fat. Rep counts usually climb quickly in the first few months.</p>
+</section>
+
+<section class="flag">
+  <h2>See a doctor if</h2>
+  <ul>
+    <li>Chest pain, fainting, unusual breathlessness or palpitations during exercise. Stop and get checked before training again.</li>
+    <li>You have heart disease, high blood pressure, diabetes or kidney issues, or take regular medication. Get clearance before increasing training or starting creatine.</li>
+    <li>Oura flags a high temperature deviation for several days, or readiness stays under 60 for a week without an obvious cause.</li>
+    <li>Loud snoring, gasping at night, or frequent breathing disturbances in Oura. Ask about a sleep apnea screen.</li>
+    <li>Lightheadedness, a racing heart, or swelling in the ankles or face, if you take oral minoxidil.</li>
+    <li>Low mood, loss of interest or poor sleep lasting more than two weeks. Mention finasteride, since mood changes are a listed side effect. Talk to a doctor or therapist. If you ever have thoughts of self‑harm, call or text <strong class="mono">988</strong> (US).</li>
+    <li>Joint pain that lasts past 48 hours or changes how you move.</li>
+    <li>Testosterone comes back low. Treatment decisions belong to your doctor, and over‑the‑counter "T boosters" aren't worth the money or the risk.</li>
+  </ul>
+  <p class="note">No physical in the last year? Book one with basic labs (lipids, A1c, blood pressure) as your baseline.</p>
+</section>
+
+<section>
+  <h2>What done looks like for v1</h2>
+  <p>Run one full 10‑day loop as written. Success means 4 full sessions logged in Garmin, protein hit on at least 7 of 10 days, and the readiness rules used every morning. Then we tune volume, calories and cutoffs from your real data. Don't refine the plan further before that loop; more planning now would add little.</p>
+</section>
+
+<footer>General information, not medical advice. Draft v2, updated 22 Oct 2026 with rama's rotation, stats, equipment, health answers and current meds.</footer>
+</div>
+
+<script>
+(function(){
+  var pattern=['kids','kids','kids','free','free','kids','kids','free','free','free'];
+  var queue=['A','B'];
+  var start=document.getElementById('startDate'), phase=document.getElementById('phase'), strip=document.getElementById('strip');
+  function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function save(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  var today=new Date(); today.setHours(0,0,0,0);
+  var saved=load('rsp-start');
+  start.value=saved||today.toISOString().slice(0,10);
+  phase.value=load('rsp-phase')||'0';
+  function render(){
+    save('rsp-start',start.value); save('rsp-phase',phase.value);
+    var parts=(start.value||today.toISOString().slice(0,10)).split('-');
+    var d0=new Date(+parts[0],+parts[1]-1,+parts[2]);
+    var off=+phase.value, q=0, html='', freeRun=0, micro=0;
+    for(var i=0;i<20;i++){
+      var t=pattern[(i+off)%10];
+      var d=new Date(d0); d.setDate(d0.getDate()+i);
+      var label;
+      if(t==='free'){
+        freeRun++;
+        label=(freeRun===3)?'Rest':queue[q++%2];
+      }else{
+        freeRun=0;
+        label=(micro++%2===0)?'Micro':'Walk';
+      }
+      var wd=d.toLocaleDateString(undefined,{weekday:'short'});
+      html+='<div class="day '+t+'"><b>'+(d.getMonth()+1)+'/'+d.getDate()+'</b>'+wd+'<span>'+label+'</span></div>';
+    }
+    strip.innerHTML=html;
+  }
+  start.addEventListener('change',render); phase.addEventListener('change',render); render();
+
+  var r=document.getElementById('ready'), dt=document.getElementById('dayType'), ls=document.getElementById('lowStreak'), v=document.getElementById('verdict');
+  function verdict(){
+    var s=parseInt(r.value,10), kid=dt.value==='kids', streak=parseInt(ls.value,10)||0, cls, head, body;
+    if(isNaN(s)){v.className='verdict';v.innerHTML='<strong>Enter a score</strong>Use the readiness number from this morning.';return}
+    if(s>=85){cls='g';head=kid?'Micro session':'Go as planned';body=kid?'Do the 20‑minute circuit.':'Run the next queue session. Push the top set if it moves well.'}
+    else if(s>=70){cls='g';head=kid?'Micro session or walk':'Train as written';body=kid?'Either is fine today.':'Next queue session, no extra sets.'}
+    else if(s>=60){cls='w';head=kid?'Walk only':'Train lighter';body=kid?'An easy walk, nothing structured.':'Drop one set per exercise and stop 3 reps short of failure, or do the micro session instead.'}
+    else{cls='b';head='Rest';body='Walk, eat well, sleep early. The queue waits.'}
+    if(streak>=7){cls='b';body+=' Readiness has been low for a week. If there’s no obvious cause like illness, travel or a bad stretch of sleep, check in with a doctor.'}
+    else if(streak>=2&&s<70){body+=' Second low day in a row: look at bedtime, alcohol and late caffeine first.'}
+    v.className='verdict '+cls; v.innerHTML='<strong>'+head+'</strong>'+body;
+  }
+  [r,dt,ls].forEach(function(el){el.addEventListener('input',verdict)}); verdict();
+})();
+</script>
+
+</body></html>
