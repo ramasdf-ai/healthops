@@ -1,0 +1,289 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="stylesheet" href="/nav.css">
+<nav class="ho-nav"><a href="/log.html" aria-current="page">Daily log</a><a href="/todo.html">Todo</a><a href="/plan.html">Strength plan</a><a href="/focus.html">Focus plan</a></nav>
+<title>Rotation Daily Log</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one phone-width column, tap-only rows grouped morning / evening; same tokens as the Rotation Strength Plan */
+:root{
+  --bg:#F3F5F2; --surface:#FFFFFF; --ink:#18211D; --muted:#5B6862; --line:#D6DDD8;
+  --free:#2F6B4F; --free-soft:#E1EEE6; --kids:#B7701A; --kids-soft:#F7EBD9;
+  --good:#2F7D4A; --warn:#B7861A; --bad:#B23A2E; --on-accent:#FFFFFF;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121815; --surface:#1A221E; --ink:#E6ECE8; --muted:#9AA8A1; --line:#2E3934;
+  --free:#6FC096; --free-soft:#1F3329; --kids:#E3A452; --kids-soft:#3A2C18;
+  --good:#6FC096; --warn:#E3B452; --bad:#E57A6E; --on-accent:#0E1411; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121815; --surface:#1A221E; --ink:#E6ECE8; --muted:#9AA8A1; --line:#2E3934;
+  --free:#6FC096; --free-soft:#1F3329; --kids:#E3A452; --kids-soft:#3A2C18;
+  --good:#6FC096; --warn:#E3B452; --bad:#E57A6E; --on-accent:#0E1411; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:560px;margin:0 auto;padding-block:20px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.02em;margin:0;line-height:1.1}
+h1{font-size:1.9rem}
+h2{font-size:1.15rem;color:var(--muted)}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.top a{color:var(--free);font-size:.85rem}
+.datebar{display:flex;align-items:center;gap:8px}
+.datebar button{font:inherit;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:4px;width:40px;height:40px;font-size:1.1rem;cursor:pointer}
+.datebar input{flex:1;min-width:0;font:inherit;font-family:var(--mono);padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--ink)}
+.status{font-family:var(--mono);font-size:.75rem;color:var(--muted);min-height:1.2em}
+.status.err{color:var(--bad)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-size:.82rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips label{min-width:44px;height:40px;padding:0 12px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:4px;cursor:pointer;font-family:var(--mono);font-size:.85rem;background:var(--bg);user-select:none}
+.chips input:checked+label{background:var(--free);border-color:var(--free);color:var(--on-accent);font-weight:600}
+.chips.day input[value="kids"]:checked+label{background:var(--kids);border-color:var(--kids)}
+.chips input:focus-visible+label{outline:2px solid var(--free);outline-offset:2px}
+.nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.nums label{font-size:.82rem;color:var(--muted);display:flex;flex-direction:column;gap:4px;min-width:0}
+.nums input,textarea{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);width:100%}
+textarea{font-family:var(--body);font-size:.95rem;min-height:60px;resize:vertical}
+input:focus-visible,textarea:focus-visible,.datebar button:focus-visible{outline:2px solid var(--free);outline-offset:1px}
+.verdict{padding:10px 12px;border-radius:4px;border-left:4px solid var(--line);background:var(--bg);font-size:.9rem}
+.verdict.g{border-color:var(--good)}.verdict.w{border-color:var(--warn)}.verdict.b{border-color:var(--bad)}
+.verdict strong{font-family:var(--display);text-transform:uppercase;font-size:1.05rem;letter-spacing:.02em;margin-right:6px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{min-width:0}
+.stat b{display:block;font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums}
+.stat span{font-size:.75rem;color:var(--muted)}
+.habits{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.hist{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.82rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+td{font-family:var(--mono)}
+tr.sel td{background:var(--free-soft)}
+tbody tr{cursor:pointer}
+.tag{display:inline-block;font-size:.68rem;padding:1px 6px;border-radius:3px;font-weight:600;text-transform:uppercase}
+.tag.free{background:var(--free-soft);color:var(--free)}.tag.kids{background:var(--kids-soft);color:var(--kids)}
+.empty{color:var(--muted);font-size:.88rem}
+.banner{border:1px solid var(--warn);border-radius:6px;padding:10px 12px;font-size:.88rem}
+.txt{font:inherit;font-size:.95rem;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);width:100%}
+.txt:focus-visible{outline:2px solid var(--free);outline-offset:1px}
+.lbl.col{flex-direction:column;justify-content:flex-start}
+.yday{font-size:.9rem;padding:10px 12px;border-radius:4px;background:var(--bg)}
+.yday b{display:block;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.chips.res input[value="no"]:checked+label{background:var(--muted);border-color:var(--muted)}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <h1>Rotation Daily Log</h1>
+    
+  </div>
+
+  <div class="banner" id="noDb" hidden>Can't reach the local server. Start it with <code>python3 server.py</code> and reload.</div>
+
+  <div class="datebar">
+    <button type="button" id="prev" aria-label="Previous day">‹</button>
+    <input type="date" id="date" aria-label="Log date">
+    <button type="button" id="next" aria-label="Next day">›</button>
+  </div>
+  <div class="status" id="status" aria-live="polite">Loading your entries…</div>
+
+  <section class="card" aria-labelledby="pHead">
+    <h2 id="pHead">Today's promise</h2>
+    <div class="yday" id="yday"></div>
+    <div class="stats" id="tally"></div>
+    <label class="lbl col" for="promiseFull">Full promise<input type="text" class="txt" id="promiseFull" placeholder="30 minutes on X"></label>
+    <label class="lbl col" for="promiseMin">Minimum version<input type="text" class="txt" id="promiseMin" placeholder="5 minutes on X"></label>
+    <div class="field"><div class="lbl">Result</div><div class="chips res" id="promiseResult"></div></div>
+    <label class="lbl col" for="keptBy">Today I kept my word by…<input type="text" class="txt" id="keptBy"></label>
+  </section>
+
+  <section class="card" aria-labelledby="mHead">
+    <h2 id="mHead">Morning</h2>
+    <div class="field">
+      <div class="lbl">Day type</div>
+      <div class="chips day" id="dayType"></div>
+    </div>
+    <div class="nums">
+      <label for="readiness">Oura readiness<input type="number" id="readiness" min="0" max="100" inputmode="numeric"></label>
+      <label for="weight">Weight (lb, optional)<input type="number" id="weight" min="50" max="400" step="0.1" inputmode="decimal"></label>
+    </div>
+    <div class="verdict" id="verdict">Enter readiness to see today's call.</div>
+  </section>
+
+  <section class="card" aria-labelledby="eHead">
+    <h2 id="eHead">Evening</h2>
+    <div class="field"><div class="lbl">Session done</div><div class="chips" id="session"></div></div>
+    <div class="field"><div class="lbl"><span>Mood</span><span>1 low · 5 great</span></div><div class="chips" id="mood"></div></div>
+    <div class="field"><div class="lbl"><span>Brain fog</span><span>1 clear · 5 heavy</span></div><div class="chips" id="fog"></div></div>
+    <div class="field"><div class="lbl"><span>Stress</span><span>1 calm · 5 high</span></div><div class="chips" id="stress"></div></div>
+    <div class="field"><div class="lbl">Done today</div><div class="chips" id="habits"></div></div>
+    <div class="nums">
+      <label for="meditation">Meditation (min)<input type="number" id="meditation" min="0" max="300" inputmode="numeric"></label>
+      <label for="reading">Reading (min)<input type="number" id="reading" min="0" max="600" inputmode="numeric"></label>
+    </div>
+    <label class="lbl" for="note" style="flex-direction:column">Note (travel, late night, alcohol, dose change)
+      <textarea id="note"></textarea>
+    </label>
+  </section>
+
+  <section class="card" aria-labelledby="wHead">
+    <h2 id="wHead">Last 7 days</h2>
+    <div class="stats" id="stats"></div>
+    <div class="habits" id="habitCounts"></div>
+  </section>
+
+  <section class="card" aria-labelledby="hHead">
+    <h2 id="hHead">Recent entries</h2>
+    <div class="hist" id="hist"><p class="empty">No entries yet. Fill in today above and it saves as you go.</p></div>
+  </section>
+</div>
+
+<script src="/local-db.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var SCALE=[1,2,3,4,5];
+  var HABITS=[["protein","Protein"],["creatine","Creatine"],["meds","Meds"],["journal","Journal"],["bacopa","Bacopa"]];
+  function chips(id,type,name,opts){
+    var h='';
+    opts.forEach(function(o){
+      var v=Array.isArray(o)?o[0]:String(o), t=Array.isArray(o)?o[1]:String(o), cid=name+'-'+v;
+      h+='<input type="'+type+'" name="'+name+'" id="'+cid+'" value="'+v+'"><label for="'+cid+'">'+t+'</label>';
+    });
+    $(id).innerHTML=h;
+  }
+  chips('dayType','radio','dayType',[["free","Free"],["kids","Kids"]]);
+  chips('session','radio','session',[["A","A"],["B","B"],["Micro","Micro"],["Walk","Walk"],["Ride","Ride"],["Rest","Rest"]]);
+  chips('mood','radio','mood',SCALE); chips('fog','radio','fog',SCALE); chips('stress','radio','stress',SCALE);
+  chips('habits','checkbox','habit',HABITS);
+  chips('promiseResult','radio','promiseResult',[["full","Kept full"],["min","Kept minimum"],["no","Not kept"]]);
+
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+  var entries={}, cur=iso(new Date()), db=null, dirty=false, timer=null, chain=Promise.resolve(), loaded=false;
+  $('date').value=cur;
+
+  function radio(name){var el=document.querySelector('input[name="'+name+'"]:checked');return el?el.value:null}
+  function num(id){var v=$(id).value;return v===''?null:Number(v)}
+  function read(){
+    var o={date:cur,dayType:radio('dayType'),readiness:num('readiness'),weight:num('weight'),session:radio('session'),
+      mood:radio('mood')?+radio('mood'):null,fog:radio('fog')?+radio('fog'):null,stress:radio('stress')?+radio('stress'):null,
+      meditation:num('meditation'),reading:num('reading'),note:$('note').value.trim(),
+      promiseFull:$('promiseFull').value.trim(),promiseMin:$('promiseMin').value.trim(),promiseResult:radio('promiseResult'),keptBy:$('keptBy').value.trim()};
+    HABITS.forEach(function(h){o[h[0]]=$('habit-'+h[0]).checked});
+    return o;
+  }
+  function setRadio(name,v){document.querySelectorAll('input[name="'+name+'"]').forEach(function(el){el.checked=(v!=null&&el.value===String(v))})}
+  function fill(e){
+    e=e||{};
+    setRadio('dayType',e.dayType);setRadio('session',e.session);setRadio('mood',e.mood);setRadio('fog',e.fog);setRadio('stress',e.stress);
+    $('readiness').value=e.readiness==null?'':e.readiness;$('weight').value=e.weight==null?'':e.weight;
+    $('meditation').value=e.meditation==null?'':e.meditation;$('reading').value=e.reading==null?'':e.reading;
+    $('note').value=e.note||'';
+    $('promiseFull').value=e.promiseFull||'';$('promiseMin').value=e.promiseMin||'';$('keptBy').value=e.keptBy||'';setRadio('promiseResult',e.promiseResult);
+    HABITS.forEach(function(h){$('habit-'+h[0]).checked=!!e[h[0]]});
+    verdict();
+  }
+
+  function lowStreak(){
+    var n=0,d=parse(cur);
+    for(var i=0;i<30;i++){var e=entries[iso(d)];if(!e||e.readiness==null||e.readiness>=70)break;n++;d.setDate(d.getDate()-1)}
+    return n;
+  }
+  function verdict(){
+    var s=num('readiness'),kid=radio('dayType')==='kids',v=$('verdict'),cls,head,body;
+    if(s==null){v.className='verdict';v.textContent="Enter readiness to see today's call.";return}
+    if(s>=85){cls='g';head=kid?'Micro session':'Go as planned';body=kid?'20-minute circuit.':'Next queue session; push the top set if it moves well.'}
+    else if(s>=70){cls='g';head=kid?'Micro or walk':'Train as written';body=kid?'Either is fine.':'Next queue session, no extra sets.'}
+    else if(s>=60){cls='w';head=kid?'Walk only':'Train lighter';body=kid?'Easy walk.':'One fewer set per exercise, stop 3 reps short, or do the micro session.'}
+    else{cls='b';head='Rest';body='Walk, eat well, sleep early.'}
+    var st=lowStreak()+(s<70&&!(entries[cur]&&entries[cur].readiness<70)?1:0);
+    if(st>=7){cls='b';body+=' A week of low readiness: if there is no obvious cause, check in with a doctor.'}
+    else if(st>=2&&s<70){body+=' Several low days: look at bedtime, alcohol and late caffeine first.'}
+    v.className='verdict '+cls;v.innerHTML='<strong></strong><span></span>';
+    v.firstChild.textContent=head;v.lastChild.textContent=body;
+  }
+
+  function status(t,err){var s=$('status');s.textContent=t;s.className='status'+(err?' err':'')}
+  function save(){
+    if(!db){status('Not saved: saving is unavailable in this view.',true);return}
+    var body=read(), day=cur;
+    entries[day]=body; dirty=false; status('Saving…'); renderSummary();
+    chain=chain.then(function(){return db.doc('days/'+day).set(body)})
+      .then(function(){if(!dirty)status('Saved '+day)})
+      .catch(function(e){
+        status(e&&e.code==='quota_exceeded'?'Not saved: the log is full. Check the server.':'Not saved: '+(e&&e.message||'try again'),true);
+      });
+  }
+  function changed(){dirty=true;verdict();status('Editing…');clearTimeout(timer);timer=setTimeout(save,700)}
+  document.querySelectorAll('.card input, .card textarea').forEach(function(el){el.addEventListener('input',changed);el.addEventListener('change',changed)});
+
+  function go(day){
+    if(dirty){clearTimeout(timer);save()}
+    cur=day;$('date').value=day;fill(entries[day]);renderSummary();
+    status(entries[day]?'Editing '+day:(loaded?'New entry for '+day:status_loading()));
+  }
+  function status_loading(){return 'Loading your entries…'}
+  $('date').addEventListener('change',function(){if($('date').value)go($('date').value)});
+  $('prev').addEventListener('click',function(){var d=parse(cur);d.setDate(d.getDate()-1);go(iso(d))});
+  $('next').addEventListener('click',function(){var d=parse(cur);d.setDate(d.getDate()+1);go(iso(d))});
+
+  function avg(a){a=a.filter(function(x){return typeof x==='number'});return a.length?(a.reduce(function(s,x){return s+x},0)/a.length):null}
+  function fmt(x,d){return x==null?'–':x.toFixed(d)}
+  var RESULT={full:'Kept in full.',min:'Kept the minimum.',no:'Not kept.'};
+  function isKept(e){return e&&(e.promiseResult==='full'||e.promiseResult==='min')}
+  function renderPromise(){
+    var y=parse(cur);y.setDate(y.getDate()-1);var ye=entries[iso(y)],box=$('yday');
+    box.textContent='';var b=document.createElement('b');b.textContent="Yesterday's promise";box.appendChild(b);
+    var p=document.createElement('div');
+    p.textContent=(ye&&ye.promiseFull)?ye.promiseFull+(ye.promiseMin?' (minimum: '+ye.promiseMin+')':'')+'. '+(RESULT[ye.promiseResult]||'Result not recorded.'):'None recorded. Start with today.';
+    box.appendChild(p);
+    var all=Object.keys(entries).filter(function(k){return k<=cur&&entries[k].promiseResult});
+    var keptAll=all.filter(function(k){return isKept(entries[k])}).length;
+    var d30=parse(cur);d30.setDate(d30.getDate()-29);var s30=iso(d30);
+    var last=all.filter(function(k){return k>=s30}),kept30=last.filter(function(k){return isKept(entries[k])}).length;
+    var st=0,d=parse(cur);if(!(entries[cur]&&entries[cur].promiseResult))d.setDate(d.getDate()-1);
+    while(isKept(entries[iso(d)])){st++;d.setDate(d.getDate()-1)}
+    $('tally').innerHTML='<div class="stat"><b>'+keptAll+' / '+all.length+'</b><span>Kept, all time</span></div><div class="stat"><b>'+kept30+' / '+last.length+'</b><span>Kept, last 30 days</span></div><div class="stat"><b>'+st+'</b><span>Day streak</span></div>';
+  }
+  function renderSummary(){
+    renderPromise();
+    var end=parse(cur),win=[];
+    for(var i=0;i<7;i++){var d=new Date(end);d.setDate(end.getDate()-i);var e=entries[iso(d)];if(e)win.push(e)}
+    var items=[['Readiness',avg(win.map(function(e){return e.readiness})),0],['Mood',avg(win.map(function(e){return e.mood})),1],
+      ['Fog',avg(win.map(function(e){return e.fog})),1],['Stress',avg(win.map(function(e){return e.stress})),1],
+      ['Weight lb',avg(win.map(function(e){return e.weight})),1],
+      ['Full sessions',win.filter(function(e){return e.session==='A'||e.session==='B'}).length,0]];
+    $('stats').innerHTML=items.map(function(it){return '<div class="stat"><b>'+fmt(it[1],it[2])+'</b><span>'+it[0]+'</span></div>'}).join('');
+    $('habitCounts').textContent=win.length?HABITS.map(function(h){return h[1]+' '+win.filter(function(e){return e[h[0]]}).length+'/7'}).join(' · '):'Averages appear once you log a day.';
+    var keys=Object.keys(entries).sort().reverse().slice(0,14);
+    if(!keys.length){$('hist').innerHTML='<p class="empty">No entries yet. Fill in today above and it saves as you go.</p>';return}
+    var rows=keys.map(function(k){var e=entries[k];
+      return '<tr data-d="'+k+'"'+(k===cur?' class="sel"':'')+'><td>'+k.slice(5)+'</td><td>'+(e.dayType?'<span class="tag '+e.dayType+'">'+e.dayType+'</span>':'–')+'</td><td>'+(e.session||'–')+'</td><td>'+({full:'✓',min:'min',no:'✗'}[e.promiseResult]||'–')+'</td><td>'+(e.readiness==null?'–':e.readiness)+'</td><td>'+(e.mood||'–')+'</td><td>'+(e.fog||'–')+'</td><td>'+(e.stress||'–')+'</td></tr>'}).join('');
+    $('hist').innerHTML='<table><thead><tr><th>Date</th><th>Day</th><th>Session</th><th>Promise</th><th>Ready</th><th>Mood</th><th>Fog</th><th>Stress</th></tr></thead><tbody>'+rows+'</tbody></table>';
+    $('hist').querySelectorAll('tbody tr').forEach(function(tr){tr.addEventListener('click',function(){go(tr.getAttribute('data-d'))})});
+  }
+  renderSummary();
+
+  var use=window.claude&&window.claude.use;
+  if(!use){$('noDb').hidden=false;status('Saving unavailable in this view.',true);return}
+  window.claude.use('db').then(function(d){
+    if(!d){$('noDb').hidden=false;status('Saving unavailable in this view.',true);return}
+    db=d;
+    db.collection('days').onSnapshot(function(snap){
+      var next={};snap.docs.forEach(function(doc){next[doc.id]=doc.data()});
+      if(dirty&&entries[cur])next[cur]=entries[cur];
+      entries=next;
+      if(!loaded){loaded=true;status(entries[cur]?'Editing '+cur:'New entry for '+cur)}
+      if(!dirty)fill(entries[cur]);
+      renderSummary();
+    },function(e){status('Live updates stopped: '+(e&&e.message||'reload the page'),true)});
+  });
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,200 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="stylesheet" href="/nav.css">
+<nav class="ho-nav"><a href="/log.html">Daily log</a><a href="/todo.html" aria-current="page">Todo</a><a href="/plan.html">Strength plan</a><a href="/focus.html">Focus plan</a></nav>
+<title>Todo Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: the do-it-daily page split from the Focus and Steadiness Plan; same tokens; sage = daily practice, amber = kid days */
+:root{
+  --bg:#F3F4F6; --surface:#FFFFFF; --ink:#1A1F26; --muted:#5A6370; --line:#D7DBE1;
+  --clin:#35557A; --clin-soft:#E2E9F2; --sage:#3D6B55; --sage-soft:#E1EDE6;
+  --kids:#B7701A; --kids-soft:#F7EBD9; --bad:#B23A2E;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13161B; --surface:#1B2027; --ink:#E5E9EE; --muted:#9AA3AE; --line:#2E353F;
+  --clin:#8FB2DA; --clin-soft:#1E2A38; --sage:#7DBF9C; --sage-soft:#1D2E26;
+  --kids:#E3A452; --kids-soft:#3A2C18; --bad:#E57A6E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13161B; --surface:#1B2027; --ink:#E5E9EE; --muted:#9AA3AE; --line:#2E353F;
+  --clin:#8FB2DA; --clin-soft:#1E2A38; --sage:#7DBF9C; --sage-soft:#1D2E26;
+  --kids:#E3A452; --kids-soft:#3A2C18; --bad:#E57A6E; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:2.6rem;text-transform:uppercase}
+h2{font-size:1.75rem;text-transform:uppercase;margin-bottom:12px}
+h3{font-size:1.2rem;font-weight:600;margin:18px 0 6px}
+p{margin:0 0 10px;max-width:65ch}
+ul,ol{margin:0 0 10px;padding-left:1.2em}
+li{margin-bottom:5px;max-width:65ch}
+a{color:var(--clin)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--clin);outline-offset:2px}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.08rem;color:var(--muted)}
+.note{font-size:.85rem;color:var(--muted)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.ev{font-family:var(--mono);font-size:.7rem;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:0 5px;white-space:nowrap}
+.tag{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px;font-weight:600}
+.tag.clin{background:var(--clin-soft);color:var(--clin)}
+.tag.sage{background:var(--sage-soft);color:var(--sage)}
+.tag.kids{background:var(--kids-soft);color:var(--kids)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.mono{white-space:nowrap}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px}
+.panel h3:first-child{margin-top:0}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cols>div{min-width:0;padding:16px 18px;border-radius:6px}
+.cols .s{background:var(--sage-soft)} .cols .k{background:var(--kids-soft)}
+.cols h3{margin-top:0}
+@media (max-width:620px){.cols{grid-template-columns:1fr}}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.opts>div{min-width:0;border:1px solid var(--line);border-radius:6px;padding:14px;background:var(--surface)}
+.opts>div.rec{border-color:var(--clin);border-width:2px}
+.opts h3{margin-top:0}
+@media (max-width:620px){.opts{grid-template-columns:1fr}}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.qhead h3{margin:0}
+button{font:inherit;font-size:.85rem;padding:6px 12px;border-radius:4px;border:1px solid var(--clin);background:var(--clin-soft);color:var(--clin);cursor:pointer;font-weight:600}
+.skill{display:grid;grid-template-columns:7.5rem 1fr;gap:4px 14px;padding:10px 0;border-bottom:1px solid var(--line)}
+.skill:last-child{border-bottom:0}
+.skill b{font-family:var(--display);font-size:1.15rem;text-transform:uppercase;letter-spacing:.02em;color:var(--sage)}
+.skill div{min-width:0}
+@media (max-width:520px){.skill{grid-template-columns:1fr}}
+.flag{border:1px solid var(--bad);border-radius:6px;padding:16px 18px}
+.flag h2{color:var(--bad)}
+footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">v1 · 4 Nov 2026 · for rama · <a href="/log.html">Daily log</a> · <a href="/focus.html">Focus and Steadiness Plan</a> · <a href="/plan.html">Rotation Strength Plan</a></div>
+  <h1>Todo Plan</h1>
+  <p class="lede">What you actually do each day and each week: the morning promise, the daily steadiness routine, and the weekly review. The background and reasoning stay in the plans linked above.</p>
+</header>
+
+<section>
+  <h2>Morning promise</h2>
+  <p>Every morning, make one promise to yourself and keep it. Trust in your own word only builds if the promises are sized so you actually keep them. One big promise you break teaches you that your word is cheap. Small promises you keep teach the opposite.</p>
+
+  <h3>WOOP, built around kept promises <span class="ev">moderate</span></h3>
+  <div class="panel">
+    <div class="skill"><b>Wish</b><div>Become someone whose word to myself is reliable.</div></div>
+    <div class="skill"><b>Outcome</b><div>In a month, when I tell myself I'll do something, I believe it, the way I'd trust a friend who always shows up.</div></div>
+    <div class="skill"><b>Obstacle</b><div>Making promises too big on good days, then breaking them on bad days and quietly losing faith in myself.</div></div>
+    <div class="skill"><b>Plan</b><div><em>If I'm about to promise myself something, then I shrink it to a size I'd keep even on my worst day.</em><br><em>If I can't keep the full promise, then I keep the minimum version out loud, so it still counts.</em></div></div>
+  </div>
+  <p class="note" style="margin-top:10px">WOOP (wish, outcome, obstacle, plan) paired with if‑then plans has trial evidence for helping people follow through on goals.</p>
+
+  <h3>The 60‑minute version (free days)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Time</th><th>Block</th><th>What you do</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">0–5</td><td>Show up</td><td>Water, no phone. Optional tapping round. Just being here is the first kept promise of the day.</td></tr>
+      <tr><td class="mono">5–10</td><td>Read yesterday's promise</td><td>The daily log shows yesterday's promise and whether you kept it. No judgment, just the fact. This is your running record with yourself.</td></tr>
+      <tr><td class="mono">10–20</td><td>Future self + WOOP</td><td>Write 3 to 5 lines as your future self, then run a quick WOOP for today.</td></tr>
+      <tr><td class="mono">20–25</td><td>Make today's promise</td><td>Check Oura readiness first. Then write <strong>one</strong> promise plus its minimum version, for example "Full: 30 minutes on X. Minimum: 5 minutes on X." If readiness is under 70, make the minimum the promise.</td></tr>
+      <tr><td class="mono">25–55</td><td>Keep it</td><td>Do the work. If you only hit the minimum, stop and count it as kept.</td></tr>
+      <tr><td class="mono">55–60</td><td>Record it</td><td>Mark it kept or not kept in the daily log, and finish the line "Today I kept my word by ___."</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The 15‑minute version (kid days)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Time</th><th>Block</th><th>What you do</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">0–2</td><td>Show up</td><td>Water, no phone.</td></tr>
+      <tr><td class="mono">2–4</td><td>Read and promise</td><td>Glance at yesterday's promise, then write today's, sized for a kid day.</td></tr>
+      <tr><td class="mono">4–14</td><td>Keep it</td><td>Do the minimum now, or set a time for it, such as after bedtime.</td></tr>
+      <tr><td class="mono">14–15</td><td>Record it</td><td>Log kept or not kept as soon as it's done.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note" style="margin-top:10px">Forcing the full hour onto a day that can't hold it is exactly the oversized promise this routine is meant to stop. On kid days, the short version counts as the whole routine.</p>
+
+  <h3>Two rules that make it work</h3>
+  <ol>
+    <li><strong>One promise a day, not five.</strong> More promises mean more chances to break them, and breaking one sours the rest.</li>
+    <li><strong>The minimum always counts.</strong> A kept 5‑minute promise builds more trust than an abandoned 30‑minute one. Raise the minimum as the record gets longer. A good trigger is 14 kept days in a row. <span class="ev">practical</span></li>
+  </ol>
+
+  <h3>The tally</h3>
+  <p>The tally is the most important part. It lives in the "Today's promise" card at the top of the <a href="/log.html">Rotation Daily Log</a>. Mark each day as kept in full, kept the minimum, or not kept. The card keeps a running count, like "kept 26 of 30", plus your current streak. That gives you proof instead of a feeling about whether you're reliable.</p>
+</section>
+
+<section>
+  <h2>Daily steadiness routine</h2>
+  <p>This is self‑care, not treatment. It works whether or not any diagnosis comes back, and it gives the clinician better data. It uses the journaling, meditation and stress tracking already in the strength plan, plus a few skills borrowed from DBT, a therapy built for strong and fast‑moving emotions. Learning skills on your own helps, though a skills group or therapist adds more. <span class="ev">moderate</span></p>
+
+  <h3>The daily ten minutes</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>When</th><th>What</th><th>Time</th></tr></thead>
+    <tbody>
+      <tr><td>Morning</td><td>The morning promise, above. It includes the Oura check.</td><td class="mono">above</td></tr>
+      <tr><td>Midday</td><td>Breathing reset: 2 minutes with an exhale longer than the inhale, such as 4 in and 6 out. Good before a hard meeting too. <span class="ev">moderate</span></td><td class="mono">2 min</td></tr>
+      <tr><td>Afternoon</td><td>Fog score 1 to 5, deep‑work minutes.</td><td class="mono">30 s</td></tr>
+      <tr><td>Evening</td><td>Mood and stress 1 to 5. Three journal lines: what happened, what I felt, what I did with it. Then meditation, logged in Oura.</td><td class="mono">6 min</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Four skills, one per week, then repeat</h3>
+  <div class="panel">
+    <div class="skill"><b>Stop</b><div>When a reaction spikes: stop, take a step back, observe what's happening in your body and the room, then proceed on purpose. Practice it on small irritations first, so it's there for the big ones.</div></div>
+    <div class="skill"><b>Cool down</b><div>For intense moments: cold water on the face for 30 seconds, a minute of hard movement such as squats or a fast walk, then slow breathing. It shifts your body state quickly, which is why it's in DBT's crisis set. <span class="ev">moderate</span></div></div>
+    <div class="skill"><b>Check facts</b><div>Write the event, the story you're telling about it, and the emotion's intensity from 0 to 10. Ask whether the intensity fits the facts. Use it in the evening journal.</div></div>
+    <div class="skill"><b>Opposite action</b><div>When an emotion doesn't fit the facts, act opposite to its urge. Withdrawing when low? Text one person. Want to snap? Lower your voice and slow down.</div></div>
+  </div>
+  <p class="note" style="margin-top:10px">DBT's basic self‑care set (sleep, food, exercise, avoid mood‑altering substances) is already covered by the strength plan. That overlap is deliberate.</p>
+
+  <h3>Across the rotation</h3>
+  <div class="cols">
+    <div class="s">
+      <h3><span class="tag sage">Free days</span></h3>
+      <ul>
+        <li>Full ten minutes, with a 10‑minute meditation.</li>
+        <li>Weekly review on the first free evening: read the week's journal lines, note the skill that helped, pick next week's skill.</li>
+        <li>One in‑person social plan per free block.</li>
+        <li>Evaluation prep tasks, such as calls, forms and the ASRS, go here.</li>
+      </ul>
+    </div>
+    <div class="k">
+      <h3><span class="tag kids">Kid days</span></h3>
+      <ul>
+        <li>Minimum version: mood score, one journal line, 3 minutes of breathing after bedtime.</li>
+        <li>Use Stop and Cool down in the moment. Kids notice a parent who pauses.</li>
+        <li>Outdoor time together counts toward movement and mood.</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Handoff days</h3>
+  <p>The first evening alone is often the lowest point in the loop. Plan it ahead: a training session, a call with a friend, or dinner out, then the evening routine. Log a mood score that night even if you skip everything else, because that number will show whether handoffs drive the dips. <span class="ev">practical</span></p>
+</section>
+
+<section>
+  <h2>Add to the weekly review</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Metric</th><th>Target</th><th>If off</th></tr></thead>
+    <tbody>
+      <tr><td>Promises kept</td><td class="mono">≥ 6 / 7</td><td>Shrink the minimum until it's one you'd keep on your worst day</td></tr>
+      <tr><td>Evening routine done</td><td class="mono">≥ 5 / 7</td><td>Shrink it to the kid‑day minimum, don't drop it</td></tr>
+      <tr><td>Mood, handoff nights vs others</td><td class="mono">gap shrinking</td><td>Strengthen the handoff anchor</td></tr>
+      <tr><td>Skill used in the moment</td><td class="mono">≥ 2× / week</td><td>Practice it on a small trigger</td></tr>
+      <tr><td>Evaluation booked</td><td class="mono">by Nov 15</td><td>Get on a second waitlist</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Prediction to log now</h3>
+  <p>Before the evaluation, write down what you expect it to find, how confident you are as a percentage, and what score you'd give your focus today on a 1 to 10 scale. Compare after the evaluation and again after any med phase.</p>
+</section>
+
+<footer>General information, not medical advice. Split from the Focus and Steadiness Plan on 4 Nov 2026.</footer>
+</div>
+
+</body></html>

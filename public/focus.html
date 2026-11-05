@@ -1,0 +1,226 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="stylesheet" href="/nav.css">
+<nav class="ho-nav"><a href="/log.html">Daily log</a><a href="/todo.html">Todo</a><a href="/plan.html">Strength plan</a><a href="/focus.html" aria-current="page">Focus plan</a></nav>
+<title>Focus and Steadiness Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: companion to the Rotation Strength Plan, same single reading column and type; slate = clinical path, sage = daily practice, amber = kid days */
+:root{
+  --bg:#F3F4F6; --surface:#FFFFFF; --ink:#1A1F26; --muted:#5A6370; --line:#D7DBE1;
+  --clin:#35557A; --clin-soft:#E2E9F2; --sage:#3D6B55; --sage-soft:#E1EDE6;
+  --kids:#B7701A; --kids-soft:#F7EBD9; --bad:#B23A2E;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13161B; --surface:#1B2027; --ink:#E5E9EE; --muted:#9AA3AE; --line:#2E353F;
+  --clin:#8FB2DA; --clin-soft:#1E2A38; --sage:#7DBF9C; --sage-soft:#1D2E26;
+  --kids:#E3A452; --kids-soft:#3A2C18; --bad:#E57A6E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13161B; --surface:#1B2027; --ink:#E5E9EE; --muted:#9AA3AE; --line:#2E353F;
+  --clin:#8FB2DA; --clin-soft:#1E2A38; --sage:#7DBF9C; --sage-soft:#1D2E26;
+  --kids:#E3A452; --kids-soft:#3A2C18; --bad:#E57A6E; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:2.6rem;text-transform:uppercase}
+h2{font-size:1.75rem;text-transform:uppercase;margin-bottom:12px}
+h3{font-size:1.2rem;font-weight:600;margin:18px 0 6px}
+p{margin:0 0 10px;max-width:65ch}
+ul,ol{margin:0 0 10px;padding-left:1.2em}
+li{margin-bottom:5px;max-width:65ch}
+a{color:var(--clin)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--clin);outline-offset:2px}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.08rem;color:var(--muted)}
+.note{font-size:.85rem;color:var(--muted)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.ev{font-family:var(--mono);font-size:.7rem;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:0 5px;white-space:nowrap}
+.tag{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px;font-weight:600}
+.tag.clin{background:var(--clin-soft);color:var(--clin)}
+.tag.sage{background:var(--sage-soft);color:var(--sage)}
+.tag.kids{background:var(--kids-soft);color:var(--kids)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.mono{white-space:nowrap}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px}
+.panel h3:first-child{margin-top:0}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cols>div{min-width:0;padding:16px 18px;border-radius:6px}
+.cols .s{background:var(--sage-soft)} .cols .k{background:var(--kids-soft)}
+.cols h3{margin-top:0}
+@media (max-width:620px){.cols{grid-template-columns:1fr}}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.opts>div{min-width:0;border:1px solid var(--line);border-radius:6px;padding:14px;background:var(--surface)}
+.opts>div.rec{border-color:var(--clin);border-width:2px}
+.opts h3{margin-top:0}
+@media (max-width:620px){.opts{grid-template-columns:1fr}}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.qhead h3{margin:0}
+button{font:inherit;font-size:.85rem;padding:6px 12px;border-radius:4px;border:1px solid var(--clin);background:var(--clin-soft);color:var(--clin);cursor:pointer;font-weight:600}
+.skill{display:grid;grid-template-columns:7.5rem 1fr;gap:4px 14px;padding:10px 0;border-bottom:1px solid var(--line)}
+.skill:last-child{border-bottom:0}
+.skill b{font-family:var(--display);font-size:1.15rem;text-transform:uppercase;letter-spacing:.02em;color:var(--sage)}
+.skill div{min-width:0}
+@media (max-width:520px){.skill{grid-template-columns:1fr}}
+.flag{border:1px solid var(--bad);border-radius:6px;padding:16px 18px}
+.flag h2{color:var(--bad)}
+footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Draft v3 · 4 Nov 2026 · for rama · companion to the <a href="/plan.html">Rotation Strength Plan</a></div>
+  <h1>Focus and Steadiness Plan</h1>
+  <p class="lede">Two tracks that run side by side. The <span class="tag clin">clinical</span> track gets you a proper adult ADHD evaluation, done by someone who also looks at the emotional side. The <span class="tag sage">daily</span> track is a light, non‑clinical routine for steadier moods that fits the 3‑2‑2‑3 rotation and costs about 10 minutes a day.</p>
+  <p class="note">This page helps you prepare and ask good questions. Diagnosis and any treatment decisions belong to the clinician. Evidence tags: <span class="ev">strong</span> = consistent trials or guidelines, <span class="ev">moderate</span> = good but mixed, <span class="ev">practical</span> = clinical or coaching convention.</p>
+</header>
+
+<section>
+  <h2>How the timeline fits</h2>
+  <p>Adult ADHD evaluations often have a wait of one to four months, so the booking should happen now. The wait lines up with the Nov–Dec baseline you are already running, which gives the clinician two months of daily data on day one.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>When</th><th>Clinical track</th><th>Daily track</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">By Nov 15</td><td>Book the evaluation. Get on two waitlists if the first date is past January, and cancel the later one.</td><td>Start the 10‑minute routine on Nov 1 with the strength plan.</td></tr>
+      <tr><td class="mono">Nov 1 – Dec 31</td><td>Log daily. Fill in the ASRS self‑screen once. Gather childhood evidence.</td><td>Daily check‑in, journal lines, one skill per week.</td></tr>
+      <tr><td class="mono">Eval date</td><td>Bring the packet below. Ask the questions below.</td><td>Keep logging. The routine doesn't pause for the evaluation.</td></tr>
+      <tr><td class="mono">If a med starts</td><td>It becomes its own 6 to 8‑week phase. Bacopa waits (see the three options below).</td><td>Same daily log, plus a few medication‑specific ticks.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Finding the right clinician</h2>
+  <p>You want one clinician who can tell ADHD apart from the things that look like it: mood and anxiety conditions, trauma, emotional‑regulation patterns, sleep problems. Many of these overlap or co‑occur, so a quick ADHD‑only screen can miss the bigger picture. <span class="ev">strong</span></p>
+  <h3>Who does this well</h3>
+  <ul>
+    <li><strong>Psychologist (PhD/PsyD) who does adult diagnostic assessment.</strong> Most thorough, usually 2 to 4 hours with structured interviews and rating scales. Good if you also want the emotional side assessed carefully. Cannot prescribe, so you take the report to a prescriber.</li>
+    <li><strong>Psychiatrist or psychiatric nurse practitioner (PMHNP).</strong> Can evaluate and prescribe in one place. Ask whether their intake is a full diagnostic evaluation or a shorter visit.</li>
+    <li><strong>Your primary care doctor</strong> as the starting referral. Insurance often needs it anyway, and they can order labs and check blood pressure before any medication.</li>
+  </ul>
+  <h3>Where to look</h3>
+  <ul>
+    <li>Your insurer's behavioral health directory, filtered for "adult ADHD assessment" or "psychological testing".</li>
+    <li>Psychology Today's directory, filtered by ADHD plus mood or personality as specialties.</li>
+    <li>CHADD's professional directory (the national ADHD nonprofit).</li>
+    <li>Adult ADHD or psychiatry clinics at an academic medical center near Minneapolis. Longer waits, very thorough.</li>
+  </ul>
+  <h3>What to say when you call</h3>
+  <div class="panel"><p style="margin:0">"I'd like a comprehensive adult ADHD evaluation. I've also had questions about mood and emotional regulation, and I'd like those assessed as part of the same evaluation rather than just an ADHD screen. Do you do that, how long is the appointment, and what's the wait?"</p></div>
+  <p class="note" style="margin-top:10px">Skip subscription telehealth services that diagnose and prescribe in a single short video visit. Several have faced regulatory action, and a 30‑minute visit can't do the differential you want. <span class="ev">practical</span></p>
+</section>
+
+<section>
+  <h2>What to bring</h2>
+  <ol>
+    <li><strong>Nov–Dec log.</strong> One page: weekly averages of brain fog, deep‑work minutes, mood, stress and sleep hours, plus the raw daily sheet. Mark which days were kid days, since the rotation itself may explain some of the swings.</li>
+    <li><strong>ASRS v1.1 self‑screen.</strong> The WHO's 18‑question adult ADHD checklist, free online. It's a screen, not a diagnosis, but clinicians recognize it. <span class="ev">strong</span></li>
+    <li><strong>Childhood evidence.</strong> ADHD criteria require symptoms before age 12. Old report cards with teacher comments, or a parent or sibling willing to fill in an informant form, carry a lot of weight. <span class="ev">strong</span></li>
+    <li><strong>Work examples.</strong> Two or three specific stories, such as projects started and stalled, missed deadlines despite caring, or hyperfocus on the wrong thing. Specific beats general.</li>
+    <li><strong>Full medication and supplement list.</strong> Finasteride, minoxidil (say whether oral or topical), the hair chew, creatine, and planned bacopa.</li>
+    <li><strong>Sleep picture.</strong> Oura averages for sleep duration and any breathing disturbance. Poor sleep and sleep apnea can mimic attention problems closely. <span class="ev">strong</span></li>
+    <li><strong>Caffeine, alcohol and other substance use,</strong> honestly. It changes both the diagnosis and the treatment options.</li>
+    <li><strong>Family history</strong> of ADHD, mood conditions, heart problems, or sudden cardiac death. The heart history matters if a stimulant comes up.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Questions to ask</h2>
+  <div class="panel">
+    <div class="qhead"><h3>For the evaluation</h3><button type="button" id="copyQ">Copy questions</button></div>
+    <ol id="qList">
+      <li>What did you rule in, and what did you rule out? How did you separate ADHD from mood, anxiety or sleep causes?</li>
+      <li>Did anything in the emotional‑regulation side stand out, and does it change the plan? Is a personality assessment, including the BPD question I've had, worth doing now or later?</li>
+      <li>If ADHD fits, what are the stimulant and non‑stimulant options for me, and why would you pick one first?</li>
+      <li>I take finasteride and minoxidil. Do either of those, or the mood side effect listed for finasteride, change your thinking?</li>
+      <li>I'm trying to gain muscle and eat in a surplus. How do I handle appetite loss if a medication causes it?</li>
+      <li>What should I track in the first six weeks, and what would make you change the dose or the drug?</li>
+      <li>Should I hold off on bacopa or other supplements while we start this?</li>
+      <li>Are there therapy options, such as ADHD coaching, CBT for adult ADHD, or DBT skills groups, that you'd add regardless of medication?</li>
+    </ol>
+  </div>
+  <p class="note" id="copyNote" aria-live="polite"></p>
+</section>
+
+<section>
+  <h2>If a medication starts</h2>
+  <p>A new prescription gets its own phase, separate from bacopa, so you can tell what is working. Plan on 6 to 8 weeks for the prescriber to adjust the dose. Keep the strength plan, protein and sleep habits steady through it.</p>
+  <h3>Add these to the daily log during the med phase</h3>
+  <ul>
+    <li><strong>Dose and time taken.</strong></li>
+    <li><strong>Resting heart rate and HRV from Oura.</strong> Stimulants commonly raise heart rate a few beats. If you take oral minoxidil, which can also raise heart rate, this matters more. Share the trend with the prescriber. <span class="ev">strong</span></li>
+    <li><strong>Appetite and protein hit (yes/no).</strong> Reduced appetite is one of the most common stimulant side effects and works against your bulk. Eat a protein‑heavy breakfast before the dose takes hold, and keep a shake for the evening when appetite returns. <span class="ev">strong</span></li>
+    <li><strong>Sleep latency.</strong> Oura shows how long you take to fall asleep. If it climbs, tell the prescriber about dose timing.</li>
+    <li><strong>Caffeine.</strong> Stimulants and caffeine add up. Many people find they need less coffee. Cut back if you feel jittery or your heart rate climbs.</li>
+    <li><strong>Mood and irritability at dose wear‑off,</strong> usually late afternoon, which can land right on kid pickup.</li>
+  </ul>
+  <h3>Bacopa versus a medication: pick an order</h3>
+  <div class="opts">
+    <div class="rec">
+      <div class="eyebrow">Recommended</div>
+      <h3>Medication first</h3>
+      <p class="note">If the evaluation lands before January and a med is offered, run the med phase in Jan–Feb and move bacopa to after the dose is stable. Low risk: one change at a time. High reward: the larger expected effect gets the clean read.</p>
+    </div>
+    <div>
+      <div class="eyebrow">Low effort</div>
+      <h3>Keep the calendar</h3>
+      <p class="note">Run bacopa Jan–Feb as planned and start any med in March. Fine if the evaluation date is February or later anyway. The cost is a two‑month delay on the bigger lever.</p>
+    </div>
+    <div>
+      <div class="eyebrow">Simplest</div>
+      <h3>Drop bacopa</h3>
+      <p class="note">If a medication clearly works, skip bacopa entirely. Its memory effect is modest and slow, and one fewer variable makes the next review easier.</p>
+    </div>
+  </div>
+  <p class="note" style="margin-top:10px">Whatever you pick, tell the prescriber about bacopa before taking both together. Interaction data is limited.</p>
+</section>
+
+<section>
+  <h2>Daily and weekly to-dos</h2>
+  <p>The morning promise, the daily steadiness routine and the weekly review now live on their own page, the <a href="/todo.html">Todo Plan</a>. Log each day in the <a href="/log.html">Rotation Daily Log</a>.</p>
+</section>
+
+<section class="flag">
+  <h2>Get help sooner if</h2>
+  <ul>
+    <li>Any thoughts of self‑harm or suicide. Call or text <strong class="mono">988</strong> (US), any time.</li>
+    <li>Low mood, loss of interest or poor sleep for more than two weeks. Tell your prescriber, and mention finasteride, which lists mood changes as a side effect.</li>
+    <li>Emotions that feel out of control, impulsive actions you regret, or relationships hurting because of them. Ask for a therapist now. Don't wait for the evaluation.</li>
+    <li>On any new medication: chest pain, fainting, a racing heart at rest, or a big shift in mood. Contact the prescriber the same day.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What done looks like</h2>
+  <p>By Nov 15 you have an evaluation booked with someone who will assess both sides. By the evaluation date you have the packet: the log, the ASRS, childhood evidence and the med list. Don't keep polishing the packet past that. A clinician needs the facts and the log, not a perfect document.</p>
+</section>
+
+<footer>General information, not medical advice. Draft v3, 4 Nov 2026. Daily to-dos moved to the Todo Plan. Works alongside the Rotation Strength Plan.</footer>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('copyQ'), list=document.getElementById('qList'), note=document.getElementById('copyNote');
+  btn.addEventListener('click',function(){
+    var text=Array.prototype.map.call(list.querySelectorAll('li'),function(li,i){return (i+1)+'. '+li.textContent}).join('\n');
+    function fallback(){
+      var r=document.createRange(); r.selectNodeContents(list);
+      var s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      note.textContent='Questions selected. Copy them with your keyboard or the share menu.';
+    }
+    try{
+      navigator.clipboard.writeText(text).then(function(){note.textContent='Copied.'},fallback);
+    }catch(e){fallback()}
+  });
+})();
+</script>
+
+</body></html>
